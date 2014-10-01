@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="GameRestService:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="GameRestService-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="GameRestService:war exploded" />
+    </root>
+  </artifact>
+</component>
