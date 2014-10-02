@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="1.984" errors="0" skipped="0" tests="2" name="no.arhplanet.game.MainTest">
+<testsuite failures="0" time="2.652" errors="0" skipped="0" tests="2" name="no.arhplanet.game.MainTest">
   <properties>
     <property name="idea.version" value="13.1.4"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
@@ -67,6 +67,6 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase time="1.815" classname="no.arhplanet.game.MainTest" name="_testMyResource2"/>
-  <testcase time="0.169" classname="no.arhplanet.game.MainTest" name="testApplicationWadl"/>
+  <testcase time="2.426" classname="no.arhplanet.game.MainTest" name="_testMyResource2"/>
+  <testcase time="0.226" classname="no.arhplanet.game.MainTest" name="testApplicationWadl"/>
 </testsuite>

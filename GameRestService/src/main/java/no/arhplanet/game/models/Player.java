@@ -1,8 +1,9 @@
 package no.arhplanet.game.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Player {
+public class Player implements Serializable{
 
     private Long id;
 

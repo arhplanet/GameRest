@@ -1,5 +1,8 @@
 package no.arhplanet.game;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
@@ -24,8 +27,12 @@ public class Application extends GuiceServletContextListener {
                 for ( Class<?> resource : rc.getClasses() ) {
                     bind( resource );
                 }
+                Map<String, String> initParams = new HashMap<String, String>();
+                initParams.put("com.sun.jersey.config.feature.Trace", "true");
+                initParams.put("com.sun.jersey.api.json.POJOMappingFeature", "true");
 
-                serve( "/services/*" ).with( GuiceContainer.class );
+
+                serve( "/services/*" ).with( GuiceContainer.class, initParams );
             }
         } );
     }

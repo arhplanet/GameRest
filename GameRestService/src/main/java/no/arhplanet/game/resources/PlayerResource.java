@@ -35,7 +35,7 @@ public class PlayerResource {
         p.setPasswordHash("test");
         p.setLastActive(new Date());
         //playerDao.save(p);
-        return Response.ok("rwar").build();
+        return Response.ok(p).build();
     }
 
     @POST

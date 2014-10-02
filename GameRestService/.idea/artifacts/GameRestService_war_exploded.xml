@@ -9,6 +9,19 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.31" />
+          <element id="library" level="project" name="Maven: com.sun.jersey:jersey-json:1.16" />
+          <element id="library" level="project" name="Maven: org.codehaus.jettison:jettison:1.1" />
+          <element id="library" level="project" name="Maven: com.sun.xml.bind:jaxb-impl:2.2.3-1" />
+          <element id="library" level="project" name="Maven: javax.xml.bind:jaxb-api:2.2.2" />
+          <element id="library" level="project" name="Maven: javax.xml.stream:stax-api:1.0-2" />
+          <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.2" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.2" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-jaxrs:1.9.2" />
+          <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-xc:1.9.2" />
+          <element id="library" level="project" name="Maven: com.sun.jersey:jersey-core:1.16" />
+          <element id="library" level="project" name="Maven: com.sun.jersey:jersey-bundle:1.18.1" />
+          <element id="library" level="project" name="Maven: javax.ws.rs:jsr311-api:1.1.1" />
           <element id="library" level="project" name="Maven: com.sun.jersey.contribs:jersey-guice:1.16" />
           <element id="library" level="project" name="Maven: javax.inject:javax.inject:1" />
           <element id="library" level="project" name="Maven: com.google.inject:guice:3.0" />
@@ -17,7 +30,6 @@
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-servlet:1.16" />
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-server:1.16" />
           <element id="library" level="project" name="Maven: asm:asm:3.1" />
-          <element id="library" level="project" name="Maven: com.sun.jersey:jersey-core:1.16" />
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-grizzly2-servlet:1.16" />
           <element id="library" level="project" name="Maven: org.glassfish.grizzly:grizzly-http-servlet:2.2.16" />
           <element id="library" level="project" name="Maven: org.glassfish.grizzly:grizzly-http-server:2.2.16" />

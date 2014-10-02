@@ -3,6 +3,8 @@ package no.arhplanet.game;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ws.rs.core.UriBuilder;
 
@@ -54,7 +56,11 @@ public class Main {
                     bind(resource);
                 }
 
-                serve("/services/*").with(GuiceContainer.class);
+                Map<String, String> initParams = new HashMap<String, String>();
+                initParams.put("com.sun.jersey.config.feature.Trace", "true");
+                initParams.put("com.sun.jersey.api.json.POJOMappingFeature", "true");
+
+                serve("/services/*").with(GuiceContainer.class, initParams);
             }
         });
 
