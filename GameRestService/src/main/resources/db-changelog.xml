@@ -1,0 +1,26 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <!--
+    Denne filen skal ikke editeres direkte. Bruk databasescript.sh
+
+    Følgende contexter er tilgjenglig:
+      <ingen context>: oppretter bare et tomt skjema
+      prod: samme som over, men populerer også med data som skal i prod
+      utv: samme som over, men inkluderer også utviklers testdata
+-->
+    <changeSet id="initial-schema" author="arhplanet@gmail.com">
+        <comment>
+            Initielt skjema
+        </comment>
+        <sqlFile path="liquibase/intitial-schema.sql" endDelimiter="//"/>
+    </changeSet>
+
+
+    <!-- DATABASESCRIPT PLACEHOLDER. OBS: ./buildtools/src/main/resources/databasescript.sh vil sette inn nye
+    entries over denne kommentaren. Vi ønsker at schema-populate-utv.sql skal kjøres helt til slutt, slik
+    at vi har ett sted å oppdatere testdata. -->
+
+</databaseChangeLog>

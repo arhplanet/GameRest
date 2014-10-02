@@ -12,8 +12,8 @@
     <description>
         Client to contact rest services
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="arhplanet@gmail.com" href="http://www.f2u.no">
+        Arne-Richard Hofsøy
     </author>
     <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="3.5.0" />

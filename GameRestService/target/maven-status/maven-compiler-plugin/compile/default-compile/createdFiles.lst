@@ -1,5 +1,7 @@
-no/arhplanet/game/RootResource.class
-no/arhplanet/game/AuthorizeResource.class
-no/arhplanet/game/MyResource.class
-no/arhplanet/game/Main.class
-no/arhplanet/game/SimpleOAuthService.class
+no/arhplanet/game/resources/PlayerResource.class
+no/arhplanet/game/models/Player.class
+no/arhplanet/game/dao/Dao.class
+no/arhplanet/game/dao/PlayerDaoImpl.class
+no/arhplanet/game/dao/AbstractDao.class
+no/arhplanet/game/Application.class
+no/arhplanet/game/Application$1.class
