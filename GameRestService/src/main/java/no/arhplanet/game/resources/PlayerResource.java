@@ -39,7 +39,7 @@ public class PlayerResource {
         p.setNick("test");
         p.setPasswordHash("test");
         p.setLastActive(new Date());
-        //playerDao.save(p);
+        playerDao.save(p);
         return Response.ok(p).build();
     }
 
