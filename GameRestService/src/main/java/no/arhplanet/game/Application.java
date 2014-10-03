@@ -1,39 +1,24 @@
 package no.arhplanet.game;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.inject.Inject;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.servlet.GuiceServletContextListener;
-import com.google.inject.servlet.ServletModule;
-import com.sun.jersey.api.core.PackagesResourceConfig;
-import com.sun.jersey.api.core.ResourceConfig;
-import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
+import org.glassfish.hk2.api.ServiceLocator;
+import org.glassfish.jersey.server.ResourceConfig;
+import org.jvnet.hk2.guice.bridge.api.GuiceBridge;
+import org.jvnet.hk2.guice.bridge.api.GuiceIntoHK2Bridge;
 
-import no.arhplanet.game.dao.Dao;
-import no.arhplanet.game.dao.PlayerDaoImpl;
+public class Application extends ResourceConfig {
 
-public class Application extends GuiceServletContextListener {
+    @Inject
+    public Application(ServiceLocator serviceLocator) {
+        // Set package to look for resources in
+        packages("no.arhplanet.game");
 
-    @Override
-    protected Injector getInjector() {
-        return Guice.createInjector( new ServletModule() {
-            @Override
-            protected void configureServlets() {
-                bind(Dao.class).to(PlayerDaoImpl.class);
+        System.out.println("Registering injectables...");
+        GuiceBridge.getGuiceBridge().initializeGuiceBridge(serviceLocator);
 
-                ResourceConfig rc = new PackagesResourceConfig( "no.arhplanet.game.resources" );
-                for ( Class<?> resource : rc.getClasses() ) {
-                    bind( resource );
-                }
-                Map<String, String> initParams = new HashMap<String, String>();
-                initParams.put("com.sun.jersey.config.feature.Trace", "true");
-                initParams.put("com.sun.jersey.api.json.POJOMappingFeature", "true");
+        GuiceIntoHK2Bridge guiceBridge = serviceLocator.getService(GuiceIntoHK2Bridge.class);
+        guiceBridge.bridgeGuiceInjector(InjectorHolder.injector);
 
-
-                serve( "/services/*" ).with( GuiceContainer.class, initParams );
-            }
-        } );
     }
 }

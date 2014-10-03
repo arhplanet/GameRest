@@ -4,12 +4,12 @@ package no.arhplanet.game;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.grizzly.http.server.HttpServer;
-import org.jboss.resteasy.client.jaxrs.ResteasyClient;
-import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
-import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,18 +17,17 @@ import org.junit.Test;
 
 public class MainTest {
 
-    private HttpServer httpServer;
-    
-    protected ResteasyWebTarget r;
+    public HttpServer httpServer;
+
+    public WebTarget r;
 
    @Before
     public void setUp() throws Exception {
         //start the Grizzly2 web container
         httpServer = Main.startServer();
         // create the client
-        ResteasyClient client = new ResteasyClientBuilder().build();
-        r = client.target(Main.BASE_URI);
-        r.register(new Application());
+        Client client = new JerseyClientBuilder().build();
+        r = client.target(no.arhplanet.game.Main.BASE_URI);
     }
 
     @After
@@ -36,11 +35,9 @@ public class MainTest {
         httpServer.stop();
     }
 
-
-
     @Test
     public void _testMyResource2() {
-        Response response = r.path("/services/testresource/getit/").request().get();
+        Response response = r.path("/testresource/getit/").request().get();
         assertEquals(200, response.getStatus());
     }
 
@@ -51,7 +48,7 @@ public class MainTest {
     @Test
     public void testApplicationWadl() {
         //r.request().accept(MediaTypes.WADL);
-        String serviceWadl = r.path("/services/application.wadl").getUri().toString();
+        String serviceWadl = r.path("/application.wadl").getUri().toString();
         assertTrue(serviceWadl.length() > 0);
     }
 }

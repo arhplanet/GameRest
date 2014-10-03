@@ -3,6 +3,9 @@ package no.arhplanet.game.models;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Player implements Serializable{
 
     private Long id;

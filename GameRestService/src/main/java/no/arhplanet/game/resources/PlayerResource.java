@@ -21,12 +21,17 @@ public class PlayerResource {
 
     private PlayerDaoImpl playerDao;
 
+    public PlayerResource() {
+
+    }
+
     @Inject
     public PlayerResource(PlayerDaoImpl playerDao) {
         this.playerDao = playerDao;
     }
 
     @GET
+    @Path("info")
     @Produces("application/json")
     public Response info(@QueryParam("player_id") String playerId) throws SQLException {
         Player p = new Player();

@@ -3,24 +3,24 @@ package no.arhplanet.game;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.DispatcherType;
 import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.servlet.FilterRegistration;
+import org.glassfish.grizzly.servlet.ServletRegistration;
+import org.glassfish.grizzly.servlet.WebappContext;
+import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
+import org.glassfish.jersey.grizzly2.servlet.GrizzlyWebContainerFactory;
+import org.glassfish.jersey.servlet.ServletContainer;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.servlet.ServletModule;
-import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
-import com.sun.jersey.api.core.PackagesResourceConfig;
-import com.sun.jersey.core.spi.component.ioc.IoCComponentProviderFactory;
-import com.sun.jersey.guice.spi.container.GuiceComponentProviderFactory;
-import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
-
-import no.arhplanet.game.dao.Dao;
-import no.arhplanet.game.dao.PlayerDaoImpl;
+import com.google.inject.servlet.GuiceFilter;
 
 public class Main {
 
@@ -44,28 +44,29 @@ public class Main {
 
     protected static HttpServer startServer() throws IOException {
 
-        PackagesResourceConfig rc = new PackagesResourceConfig( "no.arhplanet.game.resources" );
+        final HttpServer serverLocal = GrizzlyHttpServerFactory.createHttpServer(BASE_URI, false);
 
-        Injector injector = Guice.createInjector(new ServletModule() {
-            @Override
-            protected void configureServlets() {
-                bind(Dao.class).to(PlayerDaoImpl.class);
+// Create Web application context
+        final WebappContext context = new WebappContext("Guice Webapp sample", "");
 
-                com.sun.jersey.api.core.ResourceConfig rc = new PackagesResourceConfig("no.arhplanet.game.resources");
-                for (Class<?> resource : rc.getClasses()) {
-                    bind(resource);
-                }
+        context.addListener(InjectorHolder.class);
 
-                Map<String, String> initParams = new HashMap<String, String>();
-                initParams.put("com.sun.jersey.config.feature.Trace", "true");
-                initParams.put("com.sun.jersey.api.json.POJOMappingFeature", "true");
+// Initialize and register Jersey ServletContainer
+        final ServletRegistration servletRegistration =
+                context.addServlet("ServletContainer", ServletContainer.class);
+        servletRegistration.addMapping("/*");
+        servletRegistration.setInitParameter("javax.ws.rs.Application",
+                                             "no.arhplanet.game.Application");
 
-                serve("/services/*").with(GuiceContainer.class, initParams);
-            }
-        });
+// Initialize and register GuiceFilter
+        final FilterRegistration registration =
+                context.addFilter("GuiceFilter", GuiceFilter.class);
+        registration.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), "/*");
 
-        IoCComponentProviderFactory ioc = new GuiceComponentProviderFactory( rc, injector );
-        return GrizzlyServerFactory.createHttpServer(BASE_URI + "services/", rc, ioc);
+        context.deploy(serverLocal);
+
+        serverLocal.start();
+        return serverLocal;
 
     }
     
