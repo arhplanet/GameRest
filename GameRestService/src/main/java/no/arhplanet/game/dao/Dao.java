@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface Dao<T> {
 
-    List<? extends T> getAll();
+    List<? extends T> getAll() throws Exception;
 
-    T getById(String id);
+    T getById(Long id) throws Exception;
 
 
 

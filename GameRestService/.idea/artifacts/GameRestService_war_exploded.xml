@@ -27,8 +27,8 @@
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.3.1" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.3.1" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.31" />
-          <element id="library" level="project" name="Maven: org.glassfish.jersey.core:jersey-client:2.12" />
           <element id="library" level="project" name="Maven: org.glassfish.jersey.core:jersey-server:2.12" />
+          <element id="library" level="project" name="Maven: org.glassfish.jersey.core:jersey-client:2.12" />
           <element id="library" level="project" name="Maven: javax.validation:validation-api:1.1.0.Final" />
           <element id="library" level="project" name="Maven: org.glassfish.hk2:guice-bridge:2.4.0-b01" />
           <element id="library" level="project" name="Maven: javax.inject:javax.inject:1" />

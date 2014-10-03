@@ -21,9 +21,7 @@ public class PlayerResource {
 
     private PlayerDaoImpl playerDao;
 
-    public PlayerResource() {
-
-    }
+    private PlayerResource() {}
 
     @Inject
     public PlayerResource(PlayerDaoImpl playerDao) {
@@ -33,14 +31,19 @@ public class PlayerResource {
     @GET
     @Path("info")
     @Produces("application/json")
-    public Response info(@QueryParam("player_id") String playerId) throws SQLException {
-        Player p = new Player();
-        p.setEmail("test");
-        p.setNick("test");
-        p.setPasswordHash("test");
-        p.setLastActive(new Date());
-        playerDao.save(p);
+    public Response info(@QueryParam("player_id") Long playerId) throws SQLException {
+        Player p = playerDao.getById(playerId);
+        if (p == null) {
+            return Response.status(404).build();
+        }
         return Response.ok(p).build();
+    }
+
+    @GET
+    @Path("getall")
+    @Produces("application/json")
+    public Response getAll(@QueryParam("player_id") String playerId) throws SQLException {
+        return Response.ok(playerDao.getAll()).build();
     }
 
     @POST
@@ -61,6 +64,6 @@ public class PlayerResource {
     @Produces("application/json")
     public Response delete(@QueryParam("player_id") String playerId,
                            @QueryParam("passwordHash") String passwordHash) {
-        return Response.ok("resetGame").build();
+        return Response.status(501).build();
     }
 }
