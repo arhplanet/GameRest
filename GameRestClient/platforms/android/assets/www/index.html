@@ -33,16 +33,11 @@
     </head>
     <body>
         <div class="app">
-            <h1>PhoneGap</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready, hell yeah</p>
-                <div id="login">
-                    <a id="loginGoogle">Sign In With Google!</a>
-                    <br/>
-                    <a id="loginFacebook">Sign In With Facebook!</a>
-                    <p></p>
-                </div>
+            <h1>Arhtplanet</h1>
+            <div id="deviceready">
+                <p class="event received">
+                    <img id="splash" src="img/keys1.jpg" width="200px" height="400px">
+                </p>
             </div>
         </div>
 
@@ -52,153 +47,6 @@
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript">
             app.initialize();
-            $(document).ready(function(){
-                var googleapi = {
-                    authorize: function(options) {
-                        var deferred = $.Deferred();
-
-                        var providerUrl = "";
-
-                        if (options.provider === 'Google') {
-                            providerUrl =  'https://accounts.google.com/o/oauth2/auth?';
-                        } else {
-                            providerUrl =  'https://www.facebook.com/dialog/oauth?';
-                        }
-
-                        //Build the OAuth consent page URL
-                        var authUrl = providerUrl + $.param({
-                            client_id: options.client_id,
-                            redirect_uri: options.redirect_uri,
-                            response_type: 'code',
-                            access_type: 'offline',
-                            scope: options.scope
-                        });
-
-                        var ref = window.open(authUrl, '_blank', 'location=no');
-                        ref.addEventListener('loadstart', function (event) {
-
-                            var url = event.url;
-                            var code = /\?code=(.+)$/.exec(url);
-                            var error = /\?error=(.+)$/.exec(url);
-                            var refresh = /\?refresh=(.+)$/.exec(url);
-
-                            if (code || error) {
-                                //Always close the browser when match is found
-                                ref.close();
-                            }
-
-                            var confirmUrl = "";
-                            var data2 = {};
-
-                            if (options.provider === 'Google') {
-                                if (code) {
-                                    confirmUrl =  'https://accounts.google.com/o/oauth2/token';
-                                    data2 = {
-                                        code: code[1],
-                                        client_id: options.client_id,
-                                        client_secret: options.client_secret,
-                                        redirect_uri: options.redirect_uri,
-                                        grant_type: 'authorization_code'
-                                    };
-                                    //Exchange the authorization code for an access token
-                                        $.post(confirmUrl, data2
-                                    ).done(function (data) {
-                                        deferred.resolve(data);
-                                    }).fail(function (response) {
-                                        deferred.reject(response.responseJSON);
-                                    });
-                                } else if (error) {
-                                    //The user denied access to the app
-                                    console.log("error " + error )
-                                    deferred.reject({
-                                        error: error[1]
-                                    });
-                                }
-                            } else if (options.provider === 'Facebook'){
-                                if (code) {
-                                    confirmUrl =  'https://graph.facebook.com/oauth/access_token?';
-                                    data2 = {
-                                        code: code[1],
-                                        client_id: options.client_id,
-                                        client_secret: options.client_secret,
-                                        redirect_uri: options.redirect_uri
-                                    };
-                                    //Exchange the authorization code for an access token
-                                        $.post(confirmUrl, data2
-                                    ).done(function (data) {
-                                        window.location="page2.html" + '?' + data;
-                                        deferred.resolve(data);
-                                    }).fail(function (response) {
-                                        deferred.reject(response.responseJSON);
-                                    });
-                                } else if (error) {
-                                    //The user denied access to the app
-                                    console.log("error " + error )
-                                    deferred.reject({
-                                        error: error[1]
-                                    });
-                                }
-                            }
-                        });
-
-                        return deferred.promise();
-
-                    }
-                };
-
-
-                $(document).on('deviceready', function() {
-                    var $loginButtonGoogle = $('#loginGoogle');
-                    var $loginButtonFacebook = $('#loginFacebook');
-                    var $loginStatus = $('#login p');
-
-                    var  consumerKeyGoogle = "296584509990-kpkn5h16ckhn9ntudu6vrvk40kpde77a.apps.googleusercontent.com";
-                    var  consumerSecretGoogle = "813aHcCvbG2INLjPk0Thdrwt";
-
-                    $loginButtonGoogle.on('click', function() {
-                        try {
-                        googleapi.authorize({
-                            provider : "Google",
-                            client_id: consumerKeyGoogle,
-                            client_secret: consumerSecretGoogle,
-                            redirect_uri: 'http://www.f2u.no',
-                            scope: 'email'
-                        }).done(function(data) {
-                            window.location="page2.html" + '?' + data;
-                            //$loginStatus.html(data.access_token);
-                        }).fail(function(data) {
-                            $loginStatus.html(data);
-                        });
-                        } catch (e) {
-                            console.log("error " + e.message )
-                        }
-                    });
-
-                    var consumerKeyFacebook = "300986550097492";
-                    var consumerSecretFacebook = "6d5fc47b5de14ae300d91e1925c8810f";
-
-                    $loginButtonFacebook.on('click', function() {
-                        try {
-                            googleapi.authorize({
-                                provider: "Facebook",
-                                client_id: consumerKeyFacebook,
-                                client_secret: consumerSecretFacebook,
-                                redirect_uri: 'http://www.f2u.no/',
-                                scope: 'email'
-                            }).done(function(data) {
-                                window.location="page2.html"+ '?' + data;
-                                //$loginStatus.html(data.substring(data.indexOf('=') + 1, data.length));
-                            }).fail(function(data) {
-                                $loginStatus.html(data);
-                            });
-                        } catch (e) {
-                            console.log("error " + e.message )
-                        }
-                    });
-                });
-
-
-            });
 
         </script>
     </body>

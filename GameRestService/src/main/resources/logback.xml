@@ -1,0 +1,22 @@
+<!--
+ Dette er logback konfigurasjonen som brukes når ikke noe annet er spesifisert. F.eks. når serveren kjører fra IDE'et.
+ For å spesifisere en annen konfigurasjon kan jvm'en startes med -Dlogback.configurationFile=<full_path_til_egen_konfig>
+-->
+<configuration>
+    <jmxConfigurator/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="no.arhplanet.game" level="INFO"/>
+
+    <root level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

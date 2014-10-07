@@ -31,12 +31,7 @@ public class PlayerDaoImpl extends AbstractDao<Player> {
     }
 
     private Player mapPlayer(Long id, String email, String nick, Date lastActive) {
-        Player p = new Player();
-        p.setId(id);
-        p.setEmail(email);
-        p.setNick(nick);
-        p.setLastActive(lastActive);
-        return p;
+        return new Player(id, email, nick, lastActive);
     }
 
     @Override
@@ -64,7 +59,7 @@ public class PlayerDaoImpl extends AbstractDao<Player> {
     }
 
     private void updatePlayer(Player p) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement( "UPDATE PLAYER SET EMAIL = ?, NICK = ? where ID = ?", Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement ps = conn.prepareStatement( "UPDATE PLAYER SET EMAIL = ?, NICK = ? where ID = ?");
         ps.setString( 1, p.getEmail() );
         ps.setString( 2, p.getNick() );
         ps.setLong(3, p.getId());
@@ -77,5 +72,15 @@ public class PlayerDaoImpl extends AbstractDao<Player> {
         ps.setString( 2, p.getNick() );
         ps.setString( 3, p.getPasswordHash() );
         ps.executeUpdate();
+    }
+
+    public boolean allreadyRegistered(String email) throws SQLException{
+        Statement ps = conn.createStatement();
+        Player p = null;
+        ResultSet resultSet = ps.executeQuery(SIMPLE_PLAYER_QUERY + " WHERE EMAIL = " + email);
+        while (resultSet.next()) {
+            return true;
+        }
+        return false;
     }
 }

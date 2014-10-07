@@ -41,6 +41,7 @@
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.vibration" />
+
     <icon src="icon.png" />
     <icon gap:platform="android" gap:qualifier="ldpi" src="res/icon/android/icon-36-ldpi.png" />
     <icon gap:platform="android" gap:qualifier="mdpi" src="res/icon/android/icon-48-mdpi.png" />
@@ -72,6 +73,6 @@
     <access origin="*://*.google.com/*" subdomains="true" />
     <access origin="*://*.googleusercontent.com/*" subdomains="true" />
     <access origin="*://*.localhost.no/*" subdomains="true" />
-    <access origin="https://10.0.2.2*" subdomains="true" />
+    <access origin="http://10.0.2.2/*" subdomains="true" />
     <access origin="*://*.facebook.com/*" subdomains="true" />
 </widget>

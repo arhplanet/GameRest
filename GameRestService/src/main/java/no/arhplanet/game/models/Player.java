@@ -8,6 +8,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Player implements Serializable{
 
+    public Player() {
+
+    }
+
+    public Player(Long id, String email, String nick, Date lastActive) {
+        this.id = id;
+        this.email = email;
+        this.nick = nick;
+        this.lastActive = lastActive;
+    }
+
     private Long id;
 
     public Long getId() {

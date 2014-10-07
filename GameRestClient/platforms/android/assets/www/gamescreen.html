@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!--
+    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
+
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/gamescreen.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <title>GameScreen</title>
+    </head>
+    <body>
+        <div class="app">
+            <canvas id="gameCanvas" styles="border:1px solid #000000;">
+            </canvas>
+        </div>
+
+        <div id="gamefooter">
+            <ul id="navlist">
+                <li id="active"><a href="#" id="current">Item one</a></li>
+                <li><a href="#">Item two</a></li>
+                <li><a href="#">Item three</a></li>
+                <li ><a id="quittomain" href="mainmenu.html">Quit to main</a></li>
+            </ul>
+        </div>
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/gamescreen.js"></script>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+            gamescreen.initialize();
+            var c = document.getElementById("gameCanvas");
+
+            c.width = window.innerWidth;
+            c.height = window.innerHeight;
+            var canvasW = c.width;
+            var canvasH = c.height;
+
+            var ctx = c.getContext("2d");
+            ctx.stokeStyle = "#FFF000";
+            ctx.strokeRect(0,0, c.width, c.height);
+
+            var tileGraphics = [];
+
+            var gameMap = [
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+                [1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1],
+                [1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1],
+                [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+                [1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1],
+                [1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1],
+                [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+                [1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1],
+                [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+                [1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1],
+                [1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1],
+                [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+                [1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1],
+                [1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            ];
+
+
+            var tileGraphicsToLoad = ["img/gamegraphics/grass2.gif","img/gamegraphics/sea2.gif"],
+                    tileGraphicsLoaded = 0;
+
+            for (var i = 0; i < tileGraphicsToLoad.length; i++) {
+                tileGraphics[i] = new Image();
+                tileGraphics[i].src = tileGraphicsToLoad[i];
+                tileGraphics[i].onload = function() {
+                    tileGraphicsLoaded++;
+                    if (tileGraphicsLoaded === tileGraphicsToLoad.length) {
+                        drawMap();
+                    }
+                }
+            }
+
+
+
+            var visibleTilesVertical =  Math.floor(c.width / gameMap.length);
+            var visibleTilesHorizontal =  Math.floor(c.height / gameMap[0].length); // is it safe to assume a full square map?
+            var tileW = 52;
+            var tileH = 52;
+
+            var mapX = c.width / 2;
+            var mapY = 0;
+
+            function drawMap() {
+                ctx.clearRect(0, 0, c.width, c.height);
+                document.addEventListener ( 'keydown', keyDown, false );
+                document.addEventListener ( 'keyup', keyUp, false );
+                //onEnterFrame();
+                setInterval ( onEnterFrame, 1000 / 30 ); //30 FPS
+            }
+
+            var RIGHT_KEY_CODE = 68;
+            var LEFT_KEY_CODE = 65;
+            var UP_KEY_CODE = 87;
+            var DOWN_KEY_CODE = 83;
+
+            //INITIALIZATION
+            var keysPressed = {};
+            keysPressed[RIGHT_KEY_CODE] = false;
+            keysPressed[LEFT_KEY_CODE] = false;
+            keysPressed[UP_KEY_CODE] = false;
+            keysPressed[DOWN_KEY_CODE] = false;
+
+            var playerX = canvasW/2; //center
+            var playerY = canvasH/2; //center
+
+
+
+            function onEnterFrame() {
+                if (keysPressed[RIGHT_KEY_CODE]) playerX = playerX + 2;
+                if (keysPressed[LEFT_KEY_CODE]) playerX = playerX - 2;
+                if (keysPressed[UP_KEY_CODE]) playerY = playerY - 2;
+                if (keysPressed[DOWN_KEY_CODE]) playerY = playerY + 2;
+
+                var left = 0;
+                var top = 0;
+
+                if (playerX - canvasW/2 >= 0 && playerX + canvasW/2 <= gameMap.length * tileW) {
+                    left = playerX - canvasW/2;
+                }  else if (playerX + canvasW/2 >= gameMap.length * tileW) {
+                    left = gameMap.length * tileW - canvasW;
+                }
+
+                if (playerY - canvasH/2 >= 0 && playerY + canvasH/2 <= gameMap[0].length * tileH) {
+                    top = playerY - canvasH/2;
+                }  else if (playerY + canvasH/2 >= gameMap[0].length * tileH) {
+                    top = gameMap[0].length * tileH - canvasH;
+                }
+
+
+                var leftTile = Math.floor ( left / tileW );
+                var topTile = Math.floor ( top / tileH );
+
+                var tileOffsetX = left % tileW;
+                var tileOffsetY = top % tileH;
+
+                var drawTile;
+                var xVar = 0;
+                var yVar = 0;
+
+                ctx.clearRect(0, 0, c.width, c.height);
+                for ( var x = 0; x < visibleTilesVertical; x++ ) {
+                    for ( var y = 0; y < visibleTilesHorizontal; y++ ) {
+                        try {
+                            drawTile = gameMap[x + leftTile][y + topTile];
+                            if (drawTile != null && drawTile !== 'undefined') {
+                                xVar = x * tileW - tileOffsetX;
+                                yVar = y * tileH - tileOffsetY;
+                                var textTest = (x + leftTile) + ' : ' + (y + topTile);
+                                var textwidth = ctx.measureText(textTest).width;
+                                ctx.drawImage(tileGraphics[drawTile], xVar,yVar);
+                                ctx.strokeText(textTest, xVar + tileW / 2 - textwidth / 2 , yVar + tileH / 2 + parseInt(ctx.font) / 2);
+                            }
+                        } catch (e) {
+
+                        }
+
+                    }
+                }
+
+
+                ctx.fillStyle = '#000000';
+                ctx.fillRect ( canvasW/2 - 10, canvasH/2 - 10, 20, 20 );
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect ( canvasW/2 - 7, canvasH/2 - 7, 14, 14);
+
+            }
+
+            function keyDown(e) {
+                if ( e.keyCode in keysPressed ) keysPressed[e.keyCode] = true;
+            }
+
+            function keyUp(e) {
+                if ( e.keyCode in keysPressed ) keysPressed[e.keyCode] = false;
+            }
+
+
+        </script>
+    </body>
+</html>
